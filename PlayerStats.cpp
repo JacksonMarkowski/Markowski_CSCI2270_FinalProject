@@ -2,6 +2,7 @@
 #include <iostream>
 #include <sstream>
 #include <fstream>
+#include <cstdlib>
 #include <vector>
 
 using namespace std;
@@ -22,16 +23,18 @@ void PlayerStats::showPlayersOnTeam(std::string team, int year) {
 
 }
 
-Player PlayerStats::findPlayer(std::string name) {
-
+Player* PlayerStats::findPlayer(std::string name) {
+    Player *p;
+    p = NULL;
+    return p;
 }
 
 bool PlayerStats::selectPlayer(std::string name) {
-
+    return false;
 }
 
 bool PlayerStats::deselectPlayer(std::string name) {
-
+    return false;
 }
 
 void PlayerStats::compareStatsSideBySide() {
@@ -52,69 +55,86 @@ void PlayerStats::readInStats() {
         return;
     }
 
+    int fileYear = 2014;
     string line;
     getline(file, line);
-    getline(file, line);
-    //while(getline(file, line)) {
-        //ToDO: check if player exists, if so add to stats, if not create new player
+    //getline(file, line);
+    while(getline(file, line)) {
         istringstream individualPlayerRow(line);
-        Player newPlayer;
 
         //Reads in player's name
         string lastName;
         string firstName;
+        string fullName;
         getline(individualPlayerRow, lastName, ',');
         getline(individualPlayerRow, firstName, '"');
-        newPlayer.name = firstName.substr(1) + " " + lastName.substr(1);
+        fullName = firstName.substr(1) + " " + lastName.substr(1);
 
-        //Reads in player's position
-        string pos;
-        getline(individualPlayerRow, pos, '\t');
-        getline(individualPlayerRow, pos, '\t');
-        newPlayer.pos = pos;
+        Player *player = findPlayer(fullName);
+        if (player == NULL) {
+            player = new Player;
+            players.push_back(player);
+            //ToDo: add player to collection of all players
 
+            player->name = fullName;
+
+            //Reads in player's position
+            string pos;
+            getline(individualPlayerRow, pos, '\t');
+            getline(individualPlayerRow, pos, '\t');
+            player->pos = pos;
+
+        } else {
+            //ToDo:
+            string ignore;
+            getline(individualPlayerRow, ignore, '\t');
+            getline(individualPlayerRow, ignore, '\t');
+        }
+
+        //ToDo: add player to team
         //Reads in player's team
         string team;
         getline(individualPlayerRow, team, '\t');
-        newPlayer.team = team;
 
         //Reads in player's stats
-        /*
+        Stats newPlayerStats;
+        newPlayerStats.year = fileYear;
         string stat;
         getline(individualPlayerRow, stat, '\t');
-        newPlayer.games = stat;
+        newPlayerStats.games = atoi(stat.c_str());
         getline(individualPlayerRow, stat, '\t');
-        newPlayer.atBats = stat;
+        newPlayerStats.atBats = atoi(stat.c_str());
         getline(individualPlayerRow, stat, '\t');
-        newPlayer.runs = stat;
+        newPlayerStats.runs = atoi(stat.c_str());
         getline(individualPlayerRow, stat, '\t');
-        newPlayer.hits = stat;
+        newPlayerStats.hits = atoi(stat.c_str());
         getline(individualPlayerRow, stat, '\t');
-        newPlayer.doubles = stat;
+        newPlayerStats.doubles = atoi(stat.c_str());
         getline(individualPlayerRow, stat, '\t');
-        newPlayer.triples = stat;
+        newPlayerStats.triples = atoi(stat.c_str());
         getline(individualPlayerRow, stat, '\t');
-        newPlayer.homeRuns = stat;
+        newPlayerStats.homeRuns = atoi(stat.c_str());
         getline(individualPlayerRow, stat, '\t');
-        newPlayer.rbi = stat;
+        newPlayerStats.rbi = atoi(stat.c_str());
         getline(individualPlayerRow, stat, '\t');
-        newPlayer.baseOnBalls = stat;
+        newPlayerStats.baseOnBalls = atoi(stat.c_str());
         getline(individualPlayerRow, stat, '\t');
-        newPlayer.strickOuts = stat;
+        newPlayerStats.strickOuts = atoi(stat.c_str());
         getline(individualPlayerRow, stat, '\t');
-        newPlayer.stollenBases = stat;
+        newPlayerStats.stollenBases = atoi(stat.c_str());
         getline(individualPlayerRow, stat, '\t');
-        newPlayer.caugtStealing = stat;
+        newPlayerStats.caugtStealing = atoi(stat.c_str());
         getline(individualPlayerRow, stat, '\t');
-        newPlayer.average = stat;
+        newPlayerStats.average = atof(stat.c_str());
         getline(individualPlayerRow, stat, '\t');
-        newPlayer.sluggingAverage = stat;
+        newPlayerStats.sluggingAverage = atof(stat.c_str());
         getline(individualPlayerRow, stat, '\t');
-        newPlayer.onBasePercentage = stat;
+        newPlayerStats.onBasePercentage = atof(stat.c_str());
         getline(individualPlayerRow, stat, '\t');
-        newPlayer.onBasePlusSlugging = stat;
-        }
-        */
-    //}
+        newPlayerStats.onBasePlusSlugging = atof(stat.c_str());
+
+        player->seasonalStats.push_back(newPlayerStats);
+    }
+    cout << players[500]->name << endl;
 
 }

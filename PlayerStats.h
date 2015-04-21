@@ -5,7 +5,6 @@
 
 struct Stats {
     int year;
-    std::string teamName;
     int games;
     int atBats;
     int runs;
@@ -28,7 +27,7 @@ struct Player {
     std::vector<Stats> seasonalStats;
     std::string name;
     std::string pos;
-    std::string team;
+    //std::string team;
 };
 
 struct Team {
@@ -43,7 +42,7 @@ class PlayerStats {
         ~PlayerStats();
         void showTeams();
         void showPlayersOnTeam(std::string team, int year);
-        Player findPlayer(std::string name);
+        Player* findPlayer(std::string name);
         bool selectPlayer(std::string name);
         bool deselectPlayer(std::string name);
         void compareStatsSideBySide();
@@ -52,7 +51,7 @@ class PlayerStats {
     private:
         void readInStats();
         std::vector<Team> teams;
-        std::vector<Player> players;
+        std::vector<Player*> players;
 
 };
 
