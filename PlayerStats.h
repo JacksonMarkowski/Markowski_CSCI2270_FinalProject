@@ -4,23 +4,8 @@
 #include <iostream>
 
 struct Stats {
-    int year;
-    int games;
-    int atBats;
-    int runs;
-    int hits;
-    int doubles;
-    int triples;
-    int homeRuns;
-    int rbi;
-    int baseOnBalls;
-    int strickOuts;
-    int stollenBases;
-    int caugtStealing;
-    double average;
-    double sluggingAverage;
-    double onBasePercentage;
-    double onBasePlusSlugging;
+    int intStats[13];
+    double doubleStats[4];
 };
 
 struct Player {
@@ -55,6 +40,7 @@ class PlayerStats {
         void addPlayer(Player* newPlayer);
         std::vector<Team> teams;
         std::vector<Player*> players[26];
+        std::string statsTypes[17] = {"Year", "G", "AB", "R", "H", "2B", "3B", "HR", "RBI", "BB", "K", "SB", "CS", "AVG", "SLG", "OBP", "OPS"};
 
 };
 

@@ -20,29 +20,29 @@ void PlayerStats::showTeams() {
 }
 
 bool PlayerStats::showPlayersOnTeam(std::string team, int year) {
-
+    return false;
 }
 
 bool PlayerStats::showIndividualPlayerStats(std::string name) {
-    cout << name << endl;
-    Player *p = findPlayer(name);
-    if (p != NULL) {
-        cout << p->name << " - " << p->pos << endl;
+    Player *player = findPlayer(name);
+    if (player != NULL) {
+        cout << player->name << " - " << player->pos << endl;
+        int seasonalStatsSize = player->seasonalStats.size();
+        for (int i = 0; i < 17; i++) {
+            cout << statsTypes[i];
+            for (int j = 0; j < seasonalStatsSize; j++) {
+                if (i < 14) {
+                    cout << "\t" << player->seasonalStats[j].intStats[i];
+                } else {
+                    cout << "\t" << player->seasonalStats[j].doubleStats[i-14];
+                }
+            }
+            cout << endl;
+        }
+        return true;
     } else {
         return false;
     }
-}
-
-Player* PlayerStats::findPlayer(std::string name) {
-    std::vector<Player*> playersAtHashSum = players[hashSum(name, 26)];
-    for (int i = 0; i < playersAtHashSum.size(); i++) {
-        if (playersAtHashSum[i]->name == name) {
-            return playersAtHashSum[i];
-        }
-    }
-    Player *p;
-    p = NULL;
-    return p;
 }
 
 bool PlayerStats::selectPlayer(std::string name) {
@@ -50,6 +50,7 @@ bool PlayerStats::selectPlayer(std::string name) {
 }
 
 bool PlayerStats::deselectPlayer(std::string name) {
+    return false;
 }
 
 void PlayerStats::compareStatsSideBySide() {
@@ -84,6 +85,7 @@ void PlayerStats::readInStats() {
             getline(individualPlayerRow, lastName, ',');
             getline(individualPlayerRow, firstName, '"');
             fullName = firstName.substr(1) + " " + lastName.substr(1);
+            if (i == 4) fullName = fullName.substr(1);
 
             Player *player = findPlayer(fullName);
             if (player == NULL) {
@@ -113,39 +115,15 @@ void PlayerStats::readInStats() {
             //Reads in player's stats
             string stat;
             Stats newPlayerStats;
-            newPlayerStats.year = fileYear;
-            getline(individualPlayerRow, stat, '\t');
-            newPlayerStats.games = atoi(stat.c_str());
-            getline(individualPlayerRow, stat, '\t');
-            newPlayerStats.atBats = atoi(stat.c_str());
-            getline(individualPlayerRow, stat, '\t');
-            newPlayerStats.runs = atoi(stat.c_str());
-            getline(individualPlayerRow, stat, '\t');
-            newPlayerStats.hits = atoi(stat.c_str());
-            getline(individualPlayerRow, stat, '\t');
-            newPlayerStats.doubles = atoi(stat.c_str());
-            getline(individualPlayerRow, stat, '\t');
-            newPlayerStats.triples = atoi(stat.c_str());
-            getline(individualPlayerRow, stat, '\t');
-            newPlayerStats.homeRuns = atoi(stat.c_str());
-            getline(individualPlayerRow, stat, '\t');
-            newPlayerStats.rbi = atoi(stat.c_str());
-            getline(individualPlayerRow, stat, '\t');
-            newPlayerStats.baseOnBalls = atoi(stat.c_str());
-            getline(individualPlayerRow, stat, '\t');
-            newPlayerStats.strickOuts = atoi(stat.c_str());
-            getline(individualPlayerRow, stat, '\t');
-            newPlayerStats.stollenBases = atoi(stat.c_str());
-            getline(individualPlayerRow, stat, '\t');
-            newPlayerStats.caugtStealing = atoi(stat.c_str());
-            getline(individualPlayerRow, stat, '\t');
-            newPlayerStats.average = atof(stat.c_str());
-            getline(individualPlayerRow, stat, '\t');
-            newPlayerStats.sluggingAverage = atof(stat.c_str());
-            getline(individualPlayerRow, stat, '\t');
-            newPlayerStats.onBasePercentage = atof(stat.c_str());
-            getline(individualPlayerRow, stat, '\t');
-            newPlayerStats.onBasePlusSlugging = atof(stat.c_str());
+            newPlayerStats.intStats[0] = fileYear;
+            for (int j = 1; j < 14; j++) {
+                getline(individualPlayerRow, stat, '\t');
+                newPlayerStats.intStats[j] = atoi(stat.c_str());
+            }
+            for (int j = 0; j < 4; j++) {
+                getline(individualPlayerRow, stat, '\t');
+                newPlayerStats.doubleStats[j] = atof(stat.c_str());
+            }
 
             //Adds newPlayerStats to player's vector of seasonalStats
             player->seasonalStats.push_back(newPlayerStats);
@@ -158,6 +136,18 @@ int PlayerStats::hashSum(std::string name, int s) {
     int sum = 0;
     sum = name.at(0) % s;
     return sum;
+}
+
+Player* PlayerStats::findPlayer(std::string name) {
+    std::vector<Player*> playersAtHashSum = players[hashSum(name, 26)];
+    for (int i = 0; i < playersAtHashSum.size(); i++) {
+        if (playersAtHashSum[i]->name == name) {
+            return playersAtHashSum[i];
+        }
+    }
+    Player *player;
+    player = NULL;
+    return player;
 }
 
 void PlayerStats::addPlayer(Player *newPlayer) {
