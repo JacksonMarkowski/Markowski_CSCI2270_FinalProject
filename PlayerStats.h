@@ -41,8 +41,8 @@ class PlayerStats {
         PlayerStats();
         ~PlayerStats();
         void showTeams();
-        void showPlayersOnTeam(std::string team, int year);
-        Player* findPlayer(std::string name);
+        bool showPlayersOnTeam(std::string team, int year);
+        bool showIndividualPlayerStats(std::string name);
         bool selectPlayer(std::string name);
         bool deselectPlayer(std::string name);
         void compareStatsSideBySide();
@@ -50,8 +50,11 @@ class PlayerStats {
     protected:
     private:
         void readInStats();
+        int hashSum(std::string name, int s);
+        Player* findPlayer(std::string name);
+        void addPlayer(Player* newPlayer);
         std::vector<Team> teams;
-        std::vector<Player*> players;
+        std::vector<Player*> players[26];
 
 };
 
