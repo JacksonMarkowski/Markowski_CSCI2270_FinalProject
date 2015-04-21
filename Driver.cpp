@@ -8,9 +8,12 @@
 
 using namespace std;
 
-void menuPlayersOnTeam();
-void menuIndividualPlayer();
-void menuComparePlayers();
+void menuPlayersOnTeam(PlayerStats *playerStats);
+void menuIndividualPlayer(PlayerStats *playerStats);
+void menuComparePlayers(PlayerStats *playerStats);
+void menuSelectPlayer(PlayerStats *playerStats);
+void menuDeselectPlayer(PlayerStats *playerStats);
+void menuCompareStats(PlayerStats *playerStats);
 
 int main(int argc, char* argv[]) {
     //ToDo: possible make this not a pointer
@@ -32,11 +35,11 @@ int main(int argc, char* argv[]) {
         if (userInput == 1) {
             //playerStats->showTeams();
         } else if (userInput == 2) {
-            menuPlayersOnTeam();
+            menuPlayersOnTeam(playerStats);
         } else if (userInput == 3) {
-            menuIndividualPlayer();
+            menuIndividualPlayer(playerStats);
         } else if (userInput == 4) {
-            menuComparePlayers();
+            menuComparePlayers(playerStats);
         } else if (userInput == 5) {
             continueRunning = false;
         }
@@ -44,7 +47,7 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-void menuPlayersOnTeam() {
+void menuPlayersOnTeam(PlayerStats *playerStats) {
     string teamName;
     string year;
     cout << "\n-----Show Players on Team-----" << endl;
@@ -55,15 +58,18 @@ void menuPlayersOnTeam() {
     getline(cin, year);
 }
 
-void menuIndividualPlayer() {
+void menuIndividualPlayer(PlayerStats *playerStats) {
     string playerName;
     cout << "\n-----Show Individual Player Stats-----" << endl;
     cout << "\tName: ";
     cin.ignore(10000,'\n');
     getline(cin, playerName);
+    if (!playerStats->showIndividualPlayerStats(playerName)) {
+        cout << "\t** Invalid name **" << endl;
+    }
 }
 
-void menuComparePlayers() {
+void menuComparePlayers(PlayerStats *playerStats) {
     bool continueComparing = true;
     while (continueComparing) {
         cout << "\n-----Compare Players-----" << endl;
@@ -75,13 +81,39 @@ void menuComparePlayers() {
         cin >> userInput;
 
         if (userInput == 1) {
-
+            menuSelectPlayer(playerStats);
         } else if (userInput == 2) {
-
+            menuDeselectPlayer(playerStats);
         } else if (userInput == 3) {
-
+            menuCompareStats(playerStats);
         } else if (userInput == 4) {
             continueComparing = false;
         }
     }
+}
+
+void menuSelectPlayer(PlayerStats *playerStats) {
+    string playerName;
+    cout << "\n-----Select Player-----" << endl;
+    cout << "\tName: ";
+    cin.ignore(10000,'\n');
+    getline(cin, playerName);
+    if (!playerStats->selectPlayer(playerName)) {
+        cout << "\t** Invalid name **" << endl;
+    }
+}
+
+void menuDeselectPlayer(PlayerStats *playerStats) {
+    string playerName;
+    cout << "\n-----Deselect Player-----" << endl;
+    cout << "\tName: ";
+    cin.ignore(10000,'\n');
+    getline(cin, playerName);
+    if (!playerStats->deselectPlayer(playerName)) {
+        cout << "\t** Invalid name **" << endl;
+    }
+}
+
+void menuCompareStats(PlayerStats *playerStats) {
+
 }
