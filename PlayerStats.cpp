@@ -31,10 +31,10 @@ bool PlayerStats::showIndividualPlayerStats(std::string name) {
         for (int i = 0; i < 17; i++) {
             cout << statsTypes[i];
             for (int j = 0; j < seasonalStatsSize; j++) {
-                if (i < 14) {
+                if (i < 13) {
                     cout << "\t" << player->seasonalStats[j].intStats[i];
                 } else {
-                    cout << "\t" << player->seasonalStats[j].doubleStats[i-14];
+                    cout << "\t" << player->seasonalStats[j].doubleStats[i-13];
                 }
             }
             cout << endl;
@@ -116,7 +116,7 @@ void PlayerStats::readInStats() {
             string stat;
             Stats newPlayerStats;
             newPlayerStats.intStats[0] = fileYear;
-            for (int j = 1; j < 14; j++) {
+            for (int j = 1; j < 13; j++) {
                 getline(individualPlayerRow, stat, '\t');
                 newPlayerStats.intStats[j] = atoi(stat.c_str());
             }
