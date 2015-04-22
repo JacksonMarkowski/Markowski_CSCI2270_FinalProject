@@ -45,11 +45,24 @@ bool PlayerStats::showIndividualPlayerStats(std::string name) {
     }
 }
 
+//ToDo: Possible add hashSum to selectedPlayers
 bool PlayerStats::selectPlayer(std::string name) {
-    return false;
+    Player *p = findPlayer(name);
+    if (p != NULL) {
+        selectedPlayers.push_back(p);
+        return true;
+    } else {
+        return false;
+    }
 }
 
 bool PlayerStats::deselectPlayer(std::string name) {
+    for (int i = 0; i < selectedPlayers.size(); i++) {
+        if (selectedPlayers[i]->name == name) {
+            selectedPlayers.erase(selectedPlayers.begin()+i);
+            return true;
+        }
+    }
     return false;
 }
 
@@ -101,7 +114,6 @@ void PlayerStats::readInStats() {
                 player->pos = pos;
 
             } else {
-                //ToDo:
                 string ignore;
                 getline(individualPlayerRow, ignore, '\t');
                 getline(individualPlayerRow, ignore, '\t');
