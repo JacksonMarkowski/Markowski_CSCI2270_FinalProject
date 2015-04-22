@@ -8,6 +8,7 @@
 using namespace std;
 
 PlayerStats::PlayerStats() {
+    initializeTeams();
     readInStats();
 }
 
@@ -16,7 +17,9 @@ PlayerStats::~PlayerStats() {
 }
 
 void PlayerStats::showTeams() {
-
+    for (int i = 0; i < 30; i++) {
+        cout << teams[i]->name << " - " << teams[i]->initials << endl;
+    }
 }
 
 bool PlayerStats::showPlayersOnTeam(std::string team, int year) {
@@ -46,6 +49,7 @@ bool PlayerStats::showIndividualPlayerStats(std::string name) {
 }
 
 //ToDo: Possible add hashSum to selectedPlayers
+//ToDO: only allow so many players to be selected at once (3ish)
 bool PlayerStats::selectPlayer(std::string name) {
     Player *p = findPlayer(name);
     if (p != NULL) {
@@ -64,6 +68,22 @@ bool PlayerStats::deselectPlayer(std::string name) {
         }
     }
     return false;
+}
+
+void PlayerStats::showSelectedPlayers() {
+    int selectedPlayersSize = selectedPlayers.size();
+    if (selectedPlayersSize == 0) {
+        cout << "No players selected" << endl;
+    } else {
+        cout << "Players selected: ";
+        for (int i = 0; i < selectedPlayersSize; i++) {
+            cout << selectedPlayers[i]->name;
+            if (i < selectedPlayersSize - 1) {
+                cout << ", ";
+            }
+        }
+        cout << endl;
+    }
 }
 
 void PlayerStats::compareStatsSideBySide() {
@@ -164,4 +184,21 @@ Player* PlayerStats::findPlayer(std::string name) {
 
 void PlayerStats::addPlayer(Player *newPlayer) {
     players[hashSum(newPlayer->name, 26)].push_back(newPlayer);
+}
+
+void PlayerStats::initializeTeams() {
+    std::string teamName[30] = {"Los Angeles Angles", "Atlanta Braves", "Houston Astros", "Milwaukee Brewers",
+    "Oakland Athletics", "St. Louis Cardinals", "Toronto Blue Jays", "Chicago Cubs", "Tampa Bay Rays", "Arizona Diamondbacks",
+    "Cleveland Indians", "Los Angeles Dodgers", "Seattle Mariners", "San Francisco Giants", "Baltimore Orioles", "Miami Marlins",
+    "Texas Rangers", "New York Mets", "Boston Red Sox", "Washington Nationals", "Kansas City Royals", "San Diego Padres", "Detroit Tigers",
+    "Philadelphia Phillies", "Minnesota Twins", "Pittsburgh Pirates", "Chicago White Sox", "Cincinnati Reds", "New York Yankees", "Colorado Rockies"};
+    std::string teamInitials[30] = {"LAA", "ATL", "HOU", "MIL", "OAK", "STL", "TOR", "CHC", "TB", "AZ", "CLE", "LAD", "SEA", "SF", "BAL", "MIA",
+    "TEX", "NYM", "BOS", "WSH", "KC", "SD", "DET", "PHI", "MIN", "PIT", "CHW", "CIN", "NYY", "COL"};
+
+    for (int i = 0; i < 30; i++) {
+        Team *newTeam = new Team;
+        newTeam->name = teamName[i];
+        newTeam->initials = teamInitials[i];
+        teams[i] = newTeam;
+    }
 }

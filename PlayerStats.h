@@ -9,16 +9,16 @@ struct Stats {
 };
 
 struct Player {
-    std::vector<Stats> seasonalStats;
     std::string name;
     std::string pos;
+    std::vector<Stats> seasonalStats;
     //std::string team;
 };
 
 struct Team {
     std::string name;
-    int year;
-    std::vector<Player> roster;
+    std::string initials;
+    std::vector<Player*> roster[5];
 };
 
 class PlayerStats {
@@ -39,7 +39,8 @@ class PlayerStats {
         int hashSum(std::string name, int s);
         Player* findPlayer(std::string name);
         void addPlayer(Player* newPlayer);
-        std::vector<Team> teams;
+        void initializeTeams();
+        Team* teams[30];
         std::vector<Player*> players[26];
         std::vector<Player*> selectedPlayers;
         std::string statsTypes[17] = {"Year", "G", "AB", "R", "H", "2B", "3B", "HR", "RBI", "BB", "K", "SB", "CS", "AVG", "SLG", "OBP", "OPS"};
