@@ -4,6 +4,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <vector>
+#include <cmath>
 
 using namespace std;
 
@@ -18,12 +19,26 @@ PlayerStats::~PlayerStats() {
 
 void PlayerStats::showTeams() {
     for (int i = 0; i < 30; i++) {
-        cout << teams[i]->name << " - " << teams[i]->initials << endl;
+        cout << teams[i]->name << " - " << teams[i]->abbreviation << endl;
     }
 }
 
-bool PlayerStats::showPlayersOnTeam(std::string team, int year) {
-    return false;
+bool PlayerStats::showPlayersOnTeam(std::string teamAbbreviation, int year) {
+    Team *team = findTeam(teamAbbreviation);
+    if (team != NULL) {
+        if (year >= 2010 && year <= 2014) {
+            cout << team->name << " - " << team->abbreviation << " - " << year << endl;
+            int rosterYear = std::abs(year - 2014);
+            for (int i = 0; i < team->roster[rosterYear].size(); i++) {
+                cout << team->roster[rosterYear].at(i)->name << endl;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    }
 }
 
 bool PlayerStats::showIndividualPlayerStats(std::string name) {
@@ -48,7 +63,10 @@ bool PlayerStats::showIndividualPlayerStats(std::string name) {
     }
 }
 
-//ToDo: Possible add hashSum to selectedPlayers
+int PlayerStats::numberOfPlayersSelected() {
+    return selectedPlayers.size();
+}
+
 //ToDO: only allow so many players to be selected at once (3ish)
 bool PlayerStats::selectPlayer(std::string name) {
     Player *p = findPlayer(name);
@@ -139,10 +157,10 @@ void PlayerStats::readInStats() {
                 getline(individualPlayerRow, ignore, '\t');
             }
 
-            //ToDo: add player to team
             //Reads in player's team
-            string team;
-            getline(individualPlayerRow, team, '\t');
+            string teamAbbreviation;
+            getline(individualPlayerRow, teamAbbreviation, '\t');
+            addPlayerToTeam(player, teamAbbreviation, fileYear);
 
             //Reads in player's stats
             string stat;
@@ -186,19 +204,38 @@ void PlayerStats::addPlayer(Player *newPlayer) {
     players[hashSum(newPlayer->name, 26)].push_back(newPlayer);
 }
 
+void PlayerStats::addPlayerToTeam(Player *player, std::string teamAbbreviation, int year) {
+    Team *t = findTeam(teamAbbreviation);
+    if (t != NULL) {
+        t->roster[std::abs(year - 2014)].push_back(player);
+
+    }
+}
+
 void PlayerStats::initializeTeams() {
     std::string teamName[30] = {"Los Angeles Angles", "Atlanta Braves", "Houston Astros", "Milwaukee Brewers",
     "Oakland Athletics", "St. Louis Cardinals", "Toronto Blue Jays", "Chicago Cubs", "Tampa Bay Rays", "Arizona Diamondbacks",
     "Cleveland Indians", "Los Angeles Dodgers", "Seattle Mariners", "San Francisco Giants", "Baltimore Orioles", "Miami Marlins",
     "Texas Rangers", "New York Mets", "Boston Red Sox", "Washington Nationals", "Kansas City Royals", "San Diego Padres", "Detroit Tigers",
     "Philadelphia Phillies", "Minnesota Twins", "Pittsburgh Pirates", "Chicago White Sox", "Cincinnati Reds", "New York Yankees", "Colorado Rockies"};
-    std::string teamInitials[30] = {"LAA", "ATL", "HOU", "MIL", "OAK", "STL", "TOR", "CHC", "TB", "AZ", "CLE", "LAD", "SEA", "SF", "BAL", "MIA",
+    std::string teamAbbreviation[30] = {"LAA", "ATL", "HOU", "MIL", "OAK", "STL", "TOR", "CHC", "TB", "AZ", "CLE", "LAD", "SEA", "SF", "BAL", "MIA",
     "TEX", "NYM", "BOS", "WSH", "KC", "SD", "DET", "PHI", "MIN", "PIT", "CHW", "CIN", "NYY", "COL"};
 
     for (int i = 0; i < 30; i++) {
         Team *newTeam = new Team;
         newTeam->name = teamName[i];
-        newTeam->initials = teamInitials[i];
+        newTeam->abbreviation = teamAbbreviation[i];
         teams[i] = newTeam;
     }
+}
+
+Team* PlayerStats::findTeam(std::string teamAbbreviation) {
+    for (int i = 0; i < 30; i++) {
+        if (teamAbbreviation == teams[i]->abbreviation) {
+            return teams[i];
+        }
+    }
+    Team *team;
+    team = NULL;
+    return team;
 }

@@ -17,7 +17,7 @@ struct Player {
 
 struct Team {
     std::string name;
-    std::string initials;
+    std::string abbreviation;
     std::vector<Player*> roster[5];
 };
 
@@ -26,9 +26,10 @@ class PlayerStats {
         PlayerStats();
         ~PlayerStats();
         void showTeams();
-        bool showPlayersOnTeam(std::string team, int year);
+        bool showPlayersOnTeam(std::string teamAbbreviation, int year);
         bool showIndividualPlayerStats(std::string name);
         bool selectPlayer(std::string name);
+        int numberOfPlayersSelected();
         bool deselectPlayer(std::string name);
         void showSelectedPlayers();
         void compareStatsSideBySide();
@@ -39,7 +40,9 @@ class PlayerStats {
         int hashSum(std::string name, int s);
         Player* findPlayer(std::string name);
         void addPlayer(Player* newPlayer);
+        void addPlayerToTeam(Player *player, std::string teamAbbreviation, int year);
         void initializeTeams();
+        Team* findTeam(std::string teamAbbreviation);
         Team* teams[30];
         std::vector<Player*> players[26];
         std::vector<Player*> selectedPlayers;

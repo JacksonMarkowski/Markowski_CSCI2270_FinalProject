@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
         cin >> userInput;
 
         if (userInput == 1) {
-            //playerStats->showTeams();
+            playerStats->showTeams();
         } else if (userInput == 2) {
             menuPlayersOnTeam(playerStats);
         } else if (userInput == 3) {
@@ -48,14 +48,17 @@ int main(int argc, char* argv[]) {
 }
 
 void menuPlayersOnTeam(PlayerStats *playerStats) {
-    string teamName;
+    string teamAbbreviation;
     string year;
     cout << "\n-----Show Players on Team-----" << endl;
-    cout << "\tTeam: ";
+    cout << "\tTeam(abbreviation): ";
     cin.ignore(10000,'\n');
-    getline(cin, teamName);
-    cout << "\tYear: ";
+    getline(cin, teamAbbreviation);
+    cout << "\tYear(2010-2014): ";
     getline(cin, year);
+    if (!playerStats->showPlayersOnTeam(teamAbbreviation, atoi(year.c_str()))) {
+        cout << "\t** Invalid information **" << endl;
+    }
 }
 
 void menuIndividualPlayer(PlayerStats *playerStats) {
@@ -75,18 +78,33 @@ void menuComparePlayers(PlayerStats *playerStats) {
         cout << "\n-----Compare Players-----" << endl;
         cout << "1. Select Player" << endl;
         cout << "2. Deselect Player" << endl;
-        cout << "3. Compare Stats" << endl;
-        cout << "4. Back" << endl;
+        cout << "3. Show Selected Players" << endl;
+        cout << "4. Compare Stats" << endl;
+        cout << "5. Back" << endl;
         int userInput = 0;
         cin >> userInput;
 
         if (userInput == 1) {
-            menuSelectPlayer(playerStats);
+            if (playerStats->numberOfPlayersSelected() < 5) {
+                menuSelectPlayer(playerStats);
+            } else {
+                cout << "Only up to 5 players may be selected" << endl;
+            }
         } else if (userInput == 2) {
-            menuDeselectPlayer(playerStats);
+            if (playerStats->numberOfPlayersSelected() != 0) {
+                menuDeselectPlayer(playerStats);
+            } else {
+                cout << "No players to deselect" << endl;
+            }
         } else if (userInput == 3) {
-            menuCompareStats(playerStats);
-        } else if (userInput == 4) {
+            playerStats->showSelectedPlayers();
+        }else if (userInput == 4) {
+            if (playerStats->numberOfPlayersSelected() != 0) {
+                menuCompareStats(playerStats);
+            } else {
+                cout << "No players to compare" << endl;
+            }
+        } else if (userInput == 5) {
             continueComparing = false;
         }
     }
@@ -98,7 +116,9 @@ void menuSelectPlayer(PlayerStats *playerStats) {
     cout << "\tName: ";
     cin.ignore(10000,'\n');
     getline(cin, playerName);
-    if (!playerStats->selectPlayer(playerName)) {
+    if (playerStats->selectPlayer(playerName)) {
+        cout << "\t** Player Selected **"<< endl;
+    } else {
         cout << "\t** Invalid name **" << endl;
     }
 }
@@ -109,7 +129,9 @@ void menuDeselectPlayer(PlayerStats *playerStats) {
     cout << "\tName: ";
     cin.ignore(10000,'\n');
     getline(cin, playerName);
-    if (!playerStats->deselectPlayer(playerName)) {
+    if (playerStats->deselectPlayer(playerName)) {
+        cout << "\t** Player Deselected **" << endl;
+    } else {
         cout << "\t** Invalid name **" << endl;
     }
 }
