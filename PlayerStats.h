@@ -32,8 +32,7 @@ class PlayerStats {
         int numberOfPlayersSelected();
         bool deselectPlayer(std::string name);
         void showSelectedPlayers();
-        void compareStatsSideBySide();
-        void compareStatsGraph();
+        bool compareStatsSideBySide(int year);
     protected:
     private:
         void readInStats();

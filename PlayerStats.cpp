@@ -13,22 +13,52 @@ PlayerStats::PlayerStats() {
     readInStats();
 }
 
+//ToDo
 PlayerStats::~PlayerStats() {
 
 }
 
+/*
+Function prototype:
+void PlayerStats::showTeams()
+
+Function description:
+Displays each team inside teams vector.  Prints out team name followed by team abbreviation.
+
+Example:
+PlayerStats s;
+s.showTeams();
+
+Precondition: Vector of teams has been created and filled with 30 teams, each with name and abbreviation.  Calling initializeTeams() will insure all preconditions are meet.
+Post condition: N/A
+*/
 void PlayerStats::showTeams() {
     for (int i = 0; i < 30; i++) {
         cout << teams[i]->name << " - " << teams[i]->abbreviation << endl;
     }
 }
 
+/*
+Function prototype:
+bool PlayerStats::showPlayersOnTeam(string, int)
+
+Function description:
+Displays all the names of the players who were on a team for a certain year.
+
+Example:
+PlayerStats s;
+s.showPlayersOnTeam("TB", 2014);
+
+Precondition: If teamAbbreviation matches a team abbreviation, the team must have a name and roster[] initalized.
+Post condition: Returns false if teamAbbreviation does not match a team in vector of teams.
+Also returns false if year is not between 2010 - 2014.  Returns true if all players in team's roster are displayed.
+*/
 bool PlayerStats::showPlayersOnTeam(std::string teamAbbreviation, int year) {
     Team *team = findTeam(teamAbbreviation);
     if (team != NULL) {
         if (year >= 2010 && year <= 2014) {
             cout << team->name << " - " << team->abbreviation << " - " << year << endl;
-            int rosterYear = std::abs(year - 2014);
+            int rosterYear = std::abs(year - 2014); //change name
             for (int i = 0; i < team->roster[rosterYear].size(); i++) {
                 cout << team->roster[rosterYear].at(i)->name << endl;
             }
@@ -41,6 +71,20 @@ bool PlayerStats::showPlayersOnTeam(std::string teamAbbreviation, int year) {
     }
 }
 
+/*
+Function prototype:
+bool PlayerStats::showIndividualPlayerStats(string)
+
+Function description:
+Displays all the stats for a individual player for every year the player has stats
+
+Example:
+PlayerStats s;
+s.showIndividualPlayerStats("Evan Longoria")
+
+Precondition: All stats for every seasonalStats for a player, must be initialized
+Post condition: Returns true if player was found based on input string name.  Returns false if a player was not found.
+*/
 bool PlayerStats::showIndividualPlayerStats(std::string name) {
     Player *player = findPlayer(name);
     if (player != NULL) {
@@ -63,11 +107,39 @@ bool PlayerStats::showIndividualPlayerStats(std::string name) {
     }
 }
 
+/*
+Function prototype:
+int PlayerStats::numberOfPlayersSelected()
+
+Function description:
+Returns the number of players that have been selected, size of selectedPlayers
+
+Example:
+PlayerStats s;
+s.numberOfPlayersSelected();
+
+Precondition: N/A
+Post condition: Returns int that is the size of vector selectedPlayers
+*/
 int PlayerStats::numberOfPlayersSelected() {
     return selectedPlayers.size();
 }
 
 //ToDO: only allow so many players to be selected at once (3ish)
+/*
+Function prototype:
+bool PlayerStats::selectPlayer(string)
+
+Function description:
+Finds a player based off an inputted name.  If the player is found the method adds the player to vector selectedPlayers to be used later.
+
+Example:
+PlayerStats s;
+s.selectPlayer("Evan Longoria");
+
+Precondition: N/A
+Post condition: Returns true if the player is found and added to selectedPlayer.  Returns false if the player if not found
+*/
 bool PlayerStats::selectPlayer(std::string name) {
     Player *p = findPlayer(name);
     if (p != NULL) {
@@ -78,6 +150,20 @@ bool PlayerStats::selectPlayer(std::string name) {
     }
 }
 
+/*
+Function prototype:
+bool PlayerStats::deselectPlayer(string)
+
+Function description:
+Removes a player from selectedPlayers vector if the player is already in the vector
+
+Example:
+PlayerStats s;
+s.deselectPlayer("Evan Longoria");
+
+Precondition: N/A
+Post condition: Returns true if the player is found and removed from selectedPlayers vector.  Returns false if player is not found;
+*/
 bool PlayerStats::deselectPlayer(std::string name) {
     for (int i = 0; i < selectedPlayers.size(); i++) {
         if (selectedPlayers[i]->name == name) {
@@ -88,6 +174,20 @@ bool PlayerStats::deselectPlayer(std::string name) {
     return false;
 }
 
+/*
+Function prototype:
+void PlayerStats::showSelectedPlayers()
+
+Function description:
+Displays all the players names who have been selected, are in selectedPlayers.
+
+Example:
+PlayerStats s;
+s.showSelectedPlayers();
+
+Precondition: N/A
+Post condition: N/A
+*/
 void PlayerStats::showSelectedPlayers() {
     int selectedPlayersSize = selectedPlayers.size();
     if (selectedPlayersSize == 0) {
@@ -104,14 +204,59 @@ void PlayerStats::showSelectedPlayers() {
     }
 }
 
-void PlayerStats::compareStatsSideBySide() {
+//ToDo: check names and years
+/*
+Function prototype:
+bool PlayerStats::compareStatsSideBySide(int)
 
+Function description:
+Displays all the stats for a particular season of the players who have been selected, selectedPlayers.
+
+Example:
+PlayerStats s;
+s.compareStatsSideBySide(2014);
+
+Precondition:
+Post condition:
+*/
+bool PlayerStats::compareStatsSideBySide(int year) {
+    if (year > 2014 || year < 2010) {
+        return false;
+    }
+    cout << "Name";
+    for (int i = 0; i < selectedPlayers.size(); i++) {
+        cout << "\t" << selectedPlayers[i]->name;
+    }
+    cout << endl;
+    int statsYear = std::abs(year - 2014); //change name
+    for (int i = 0; i < 17; i++) {
+        cout << statsTypes[i];
+        for (int j = 0; j < selectedPlayers.size(); j++) {
+            if (i < 13) {
+                cout << "\t" << selectedPlayers[j]->seasonalStats[statsYear].intStats[i];
+            } else {
+                cout << "\t" << selectedPlayers[j]->seasonalStats[statsYear].doubleStats[i-13];
+            }
+        }
+        cout << endl;
+    }
+    return true;
 }
 
-void PlayerStats::compareStatsGraph() {
+/*
+Function prototype:
+void PlayerStats::readInStats()
 
-}
+Function description:
 
+
+Example:
+PlayerStats s;
+s.readInStats();
+
+Precondition:
+Post condition:
+*/
 void PlayerStats::readInStats() {
     //ToDO: Clean up opening files and reading in data
     ifstream file;
@@ -182,12 +327,38 @@ void PlayerStats::readInStats() {
     }
 }
 
+/*
+Function prototype:
+int PlayerStats::hashSum(string, int)
+
+Function description:
+
+
+Example:
+hashSum("Evan Longoria", 26);
+
+Precondition:
+Post condition:
+*/
 int PlayerStats::hashSum(std::string name, int s) {
     int sum = 0;
     sum = name.at(0) % s;
     return sum;
 }
 
+/*
+Function prototype:
+Player* PlayerStats::findPlayer(string);
+
+Function description:
+
+
+Example:
+findPlayer("Evan Longoria");
+
+Precondition:
+Post condition:
+*/
 Player* PlayerStats::findPlayer(std::string name) {
     std::vector<Player*> playersAtHashSum = players[hashSum(name, 26)];
     for (int i = 0; i < playersAtHashSum.size(); i++) {
@@ -200,10 +371,39 @@ Player* PlayerStats::findPlayer(std::string name) {
     return player;
 }
 
+/*
+Function prototype:
+void PlayerStats::addPlayer(Player*)
+
+Function description:
+
+
+Example:
+Player *p = new Player;
+p->name = "Ben";
+addPlayer(p);
+
+Precondition:
+Post condition:
+*/
 void PlayerStats::addPlayer(Player *newPlayer) {
     players[hashSum(newPlayer->name, 26)].push_back(newPlayer);
 }
 
+/*
+Function prototype:
+void PlayerStats::addPlayerToTeam(Player*, string, int)
+
+Function description:
+
+
+Example:
+PlayerStats s;
+s.
+
+Precondition:
+Post condition:
+*/
 void PlayerStats::addPlayerToTeam(Player *player, std::string teamAbbreviation, int year) {
     Team *t = findTeam(teamAbbreviation);
     if (t != NULL) {
@@ -212,6 +412,20 @@ void PlayerStats::addPlayerToTeam(Player *player, std::string teamAbbreviation, 
     }
 }
 
+/*
+Function prototype:
+
+
+Function description:
+
+
+Example:
+PlayerStats s;
+s.
+
+Precondition:
+Post condition:
+*/
 void PlayerStats::initializeTeams() {
     std::string teamName[30] = {"Los Angeles Angles", "Atlanta Braves", "Houston Astros", "Milwaukee Brewers",
     "Oakland Athletics", "St. Louis Cardinals", "Toronto Blue Jays", "Chicago Cubs", "Tampa Bay Rays", "Arizona Diamondbacks",
@@ -229,6 +443,20 @@ void PlayerStats::initializeTeams() {
     }
 }
 
+/*
+Function prototype:
+
+
+Function description:
+
+
+Example:
+PlayerStats s;
+s.
+
+Precondition:
+Post condition:
+*/
 Team* PlayerStats::findTeam(std::string teamAbbreviation) {
     for (int i = 0; i < 30; i++) {
         if (teamAbbreviation == teams[i]->abbreviation) {

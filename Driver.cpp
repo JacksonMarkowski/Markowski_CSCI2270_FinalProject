@@ -41,6 +41,7 @@ int main(int argc, char* argv[]) {
         } else if (userInput == 4) {
             menuComparePlayers(playerStats);
         } else if (userInput == 5) {
+            delete playerStats;
             continueRunning = false;
         }
     }
@@ -137,5 +138,14 @@ void menuDeselectPlayer(PlayerStats *playerStats) {
 }
 
 void menuCompareStats(PlayerStats *playerStats) {
-
+    string year;
+    cout << "\n-----Compare Stats-----" << endl;
+    cout << "\tYear(2010-2014): ";
+    cin.ignore(10000,'\n');
+    getline(cin, year);
+    if (!playerStats->compareStatsSideBySide(atoi(year.c_str()))) {
+        cout << "\t** Invalid year **" << endl;
+    }
 }
+
+
