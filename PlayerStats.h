@@ -10,6 +10,7 @@ struct Stats {
 
 struct Player {
     std::string name;
+    std::string initials;
     std::string pos;
     std::vector<Stats> seasonalStats;
     //std::string team;
@@ -42,6 +43,7 @@ class PlayerStats {
         void addPlayerToTeam(Player *player, std::string teamAbbreviation, int year);
         void initializeTeams();
         Team* findTeam(std::string teamAbbreviation);
+        Stats* findPlayerStatsForYear(Player *player, int year);
         Team* teams[30];
         std::vector<Player*> players[26];
         std::vector<Player*> selectedPlayers;

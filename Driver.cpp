@@ -16,7 +16,6 @@ void menuDeselectPlayer(PlayerStats *playerStats);
 void menuCompareStats(PlayerStats *playerStats);
 
 int main(int argc, char* argv[]) {
-    //ToDo: possible make this not a pointer
     PlayerStats *playerStats = new PlayerStats();
 
     //runs until the user quits
@@ -32,6 +31,7 @@ int main(int argc, char* argv[]) {
         int userInput = 0;
         cin >> userInput;
 
+        //Checks the user input
         if (userInput == 1) {
             playerStats->showTeams();
         } else if (userInput == 2) {
@@ -48,31 +48,38 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
+//Menu for displaying the players on a team for a particular season.
 void menuPlayersOnTeam(PlayerStats *playerStats) {
     string teamAbbreviation;
     string year;
     cout << "\n-----Show Players on Team-----" << endl;
+    //User must input a team abbreviation(typically 2 or 3 characters) not the full team name.
     cout << "\tTeam(abbreviation): ";
     cin.ignore(10000,'\n');
     getline(cin, teamAbbreviation);
+    //User must enter a year between 2010 and 2014.
     cout << "\tYear(2010-2014): ";
     getline(cin, year);
+    //Prints if showPlayersOnTeam returns false, team not found or invalid year.
     if (!playerStats->showPlayersOnTeam(teamAbbreviation, atoi(year.c_str()))) {
         cout << "\t** Invalid information **" << endl;
     }
 }
 
+//Menu for displaying all stats for an individual player
 void menuIndividualPlayer(PlayerStats *playerStats) {
     string playerName;
     cout << "\n-----Show Individual Player Stats-----" << endl;
     cout << "\tName: ";
     cin.ignore(10000,'\n');
     getline(cin, playerName);
+    //Prints if showIndividualPlayerStats returns false, player is not found.
     if (!playerStats->showIndividualPlayerStats(playerName)) {
         cout << "\t** Invalid name **" << endl;
     }
 }
 
+//Menu that comes up when compare players is selected in the main menu
 void menuComparePlayers(PlayerStats *playerStats) {
     bool continueComparing = true;
     while (continueComparing) {
@@ -85,13 +92,16 @@ void menuComparePlayers(PlayerStats *playerStats) {
         int userInput = 0;
         cin >> userInput;
 
+        //Checks the user input
         if (userInput == 1) {
+            //Only allows the user to select up to 5 players at once
             if (playerStats->numberOfPlayersSelected() < 5) {
                 menuSelectPlayer(playerStats);
             } else {
                 cout << "Only up to 5 players may be selected" << endl;
             }
         } else if (userInput == 2) {
+            //Only allows the user to deselect players if there are players currently selected
             if (playerStats->numberOfPlayersSelected() != 0) {
                 menuDeselectPlayer(playerStats);
             } else {
@@ -100,6 +110,7 @@ void menuComparePlayers(PlayerStats *playerStats) {
         } else if (userInput == 3) {
             playerStats->showSelectedPlayers();
         }else if (userInput == 4) {
+            //Only compares players if there is at least one player selected
             if (playerStats->numberOfPlayersSelected() != 0) {
                 menuCompareStats(playerStats);
             } else {
@@ -111,6 +122,7 @@ void menuComparePlayers(PlayerStats *playerStats) {
     }
 }
 
+//Menu that is displayed when selecting a player to compare
 void menuSelectPlayer(PlayerStats *playerStats) {
     string playerName;
     cout << "\n-----Select Player-----" << endl;
@@ -124,6 +136,7 @@ void menuSelectPlayer(PlayerStats *playerStats) {
     }
 }
 
+//Menu that is displayed when deselecting a player
 void menuDeselectPlayer(PlayerStats *playerStats) {
     string playerName;
     cout << "\n-----Deselect Player-----" << endl;
@@ -137,6 +150,7 @@ void menuDeselectPlayer(PlayerStats *playerStats) {
     }
 }
 
+//Menu that is displayed when comparing player(s)
 void menuCompareStats(PlayerStats *playerStats) {
     string year;
     cout << "\n-----Compare Stats-----" << endl;
