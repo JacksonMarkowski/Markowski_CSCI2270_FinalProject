@@ -1,32 +1,29 @@
 # Markowski_CSCI2270_FinalProject
 
---Project Summary--
-
-The project will be a way to view and compare stats of batters in the MLB in recent 
+Project Summary: The project will be a way to view and compare stats of batters in the MLB in recent 
 seasons.  Txt files containing all players in a season and their various batting stats
 will be read in.  The user will be able to select from options such as view all the players
 on a team for a certain season, view all stats available for a player, and compare stats
 of multiple players side by side.
 
 
---How to Run--
-
+How to Run:
 1. The following files need to be in the same directory.
 	- 2010_Batting.txt, 2011_Batting.txt, 2012_Batting.txt,
 	 2013_Batting.txt, 2014_Batting.txt, Driver.cpp, PlayerStats.cpp, PlayerStats.h
 
 2. Compile and run Driver.cpp
 
-3. The console should appear and display the main menu
+3. The console should appear and display the main menu, as shown below.
 
 4. Enter the number of one of the five options.
 
-	-----Main menu-----
-	1. Show Teams
-	2. Show Players on Team
-	3. Show Individual Player Stats
-	4. Compare Players
-	5. Quit
+-----Main menu-----
+1. Show Teams
+2. Show Players on Team
+3. Show Individual Player Stats
+4. Compare Players
+5. Quit
 
 (Option 1 - Show Teams): No other input needed, returns to the main menu
 
@@ -42,12 +39,12 @@ Same as they appear when displayed when option 2, show players on team, is selec
 
 (Option 5 - Quit): Quits the program
 	
-	-----Compare Players-----
-	1. Select Player
-	2. Deselect Player
-	3. Show Selected Players
-	4. Compare Stats
-	5. Back
+-----Compare Players-----
+1. Select Player
+2. Deselect Player
+3. Show Selected Players
+4. Compare Stats
+5. Back
 
 (Option 1 - Select Player): Selects a player to be compared, enter the full name, first and last,
 of a player (Case sensitive). The same way as you would in option 3, show individual player stats.
@@ -67,21 +64,13 @@ selected have no stats for the year inputted.
 (Option 5 - Back): Returns to the main menu
 
 
---Dependencies--
+Dependencies: N/A
 
-N/A
+System Requirements: N/A
 
---System Requirements--
+Group	Members: Jackson Markowski
 
-N/A
+Contributors: N/A
 
---Group	Members--
-
-  Jackson Markowski
-
---Contributors--
-
-
---Open	issues/bugs--
-
+Open issues/bugs: 
 1. If letters are entered by the user in the menus, not an integer, the program goes into an infinit loop.
