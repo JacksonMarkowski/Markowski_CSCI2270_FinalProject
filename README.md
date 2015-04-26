@@ -67,13 +67,21 @@ How to Run:
 		5. Back: Returns to the main menu
 
 
-Dependencies: N/A
+Dependencies:
 
-System Requirements: N/A
+	N/A
 
-Group	Members: Jackson Markowski
+System Requirements: 
 
-Contributors: N/A
+	N/A
+
+Group	Members: 
+
+	Jackson Markowski
+
+Contributors: 
+
+	N/A
 
 Open issues/bugs: 
 
