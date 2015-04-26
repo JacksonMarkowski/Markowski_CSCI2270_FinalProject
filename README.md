@@ -1,6 +1,7 @@
 # Markowski_CSCI2270_FinalProject
 
 --Project Summary--
+
 The project will be a way to view and compare stats of batters in the MLB in recent 
 seasons.  Txt files containing all players in a season and their various batting stats
 will be read in.  The user will be able to select from options such as view all the players
@@ -9,21 +10,23 @@ of multiple players side by side.
 
 
 --How to Run--
+
 1. The following files need to be in the same directory.
 	- 2010_Batting.txt, 2011_Batting.txt, 2012_Batting.txt,
 	 2013_Batting.txt, 2014_Batting.txt, Driver.cpp, PlayerStats.cpp, PlayerStats.h
 
 2. Compile and run Driver.cpp
 
-3. The console should appear and display
+3. The console should appear and display the main menu
+
+4. Enter the number of one of the five options.
+
 	-----Main menu-----
 	1. Show Teams
 	2. Show Players on Team
 	3. Show Individual Player Stats
 	4. Compare Players
 	5. Quit
-
-4. Enter the number of one of the five options.
 
 (Option 1 - Show Teams): No other input needed, returns to the main menu
 
@@ -63,17 +66,22 @@ selected have no stats for the year inputted.
 
 (Option 5 - Back): Returns to the main menu
 
+
 --Dependencies--
+
 N/A
 
 --System Requirements--
+
 N/A
 
 --Group	Members--
+
   Jackson Markowski
 
 --Contributors--
 
 
 --Open	issues/bugs--
+
 1. If letters are entered by the user in the menus, not an integer, the program goes into an infinit loop.
