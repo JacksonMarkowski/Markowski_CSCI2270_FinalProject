@@ -85,4 +85,4 @@ Contributors:
 
 Open issues/bugs: 
 
-	1. If letters are entered by the user in the menus, not an integer, the program goes into an infinit loop.
+	1. More ways to check/find a team/player

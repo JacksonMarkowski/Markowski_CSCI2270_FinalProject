@@ -43,6 +43,10 @@ int main(int argc, char* argv[]) {
         } else if (userInput == 5) {
             delete playerStats;
             continueRunning = false;
+        } else {
+            cout << "Invalid Input" << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
         }
     }
     return 0;
@@ -118,6 +122,10 @@ void menuComparePlayers(PlayerStats *playerStats) {
             }
         } else if (userInput == 5) {
             continueComparing = false;
+        } else {
+            cout << "Invalid Input" << endl;
+            cin.clear();
+            cin.ignore(10000, '\n');
         }
     }
 }
