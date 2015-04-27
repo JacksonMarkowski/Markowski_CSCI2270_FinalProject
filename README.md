@@ -15,7 +15,7 @@ How to Run:
 		- 2010_Batting.txt, 2011_Batting.txt, 2012_Batting.txt,
 		 2013_Batting.txt, 2014_Batting.txt, Driver.cpp, PlayerStats.cpp, PlayerStats.h
 
-	2. Compile and run Driver.cpp
+	2. Compile files and run Driver.cpp
 
 	3. The console should appear and display the main menu, as shown below.
 
