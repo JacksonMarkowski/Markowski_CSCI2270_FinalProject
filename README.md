@@ -16,7 +16,7 @@ How to Run:
 		 2013_Batting.txt, 2014_Batting.txt, Driver.cpp, PlayerStats.cpp, PlayerStats.h
 
 	2. Compile the files and run
- 		Example: Linux CS-VM terminal: Io compile type: g++ -std=c++11 Driver.cpp PlayerStats.cpp 
+ 		Example: Linux CS-VM terminal: To compile type: g++ -std=c++11 Driver.cpp PlayerStats.cpp 
 		To run type: ./a.out
 
 	3. The program should begin running and display the main menu, as shown below.
