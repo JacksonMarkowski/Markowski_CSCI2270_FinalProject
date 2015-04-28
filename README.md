@@ -15,11 +15,13 @@ How to Run:
 		- 2010_Batting.txt, 2011_Batting.txt, 2012_Batting.txt,
 		 2013_Batting.txt, 2014_Batting.txt, Driver.cpp, PlayerStats.cpp, PlayerStats.h
 
-	2. Compile files and run Driver.cpp
+	2. Compile the files and run
+ 		Example: Linux CS-VM terminal: Io compile type: g++ -std=c++11 Driver.cpp PlayerStats.cpp 
+		To run type: ./a.out
 
-	3. The console should appear and display the main menu, as shown below.
+	3. The program should begin running and display the main menu, as shown below.
 
-	4. Enter the number of one of the five options.
+	4. How the program works:
 
 	-----Main menu-----
 	1. Show Teams
@@ -85,4 +87,4 @@ Contributors:
 
 Open issues/bugs: 
 
-	1. More ways to check/find a team/player
+	1. Checking/Finding a player/team is case sensitive
