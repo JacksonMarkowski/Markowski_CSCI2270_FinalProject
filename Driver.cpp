@@ -32,21 +32,28 @@ int main(int argc, char* argv[]) {
         cin >> userInput;
 
         //Checks the user input
-        if (userInput == 1) {
-            playerStats->showTeams();
-        } else if (userInput == 2) {
-            menuPlayersOnTeam(playerStats);
-        } else if (userInput == 3) {
-            menuIndividualPlayer(playerStats);
-        } else if (userInput == 4) {
-            menuComparePlayers(playerStats);
-        } else if (userInput == 5) {
-            delete playerStats;
-            continueRunning = false;
-        } else {
-            cout << "Invalid Input" << endl;
-            cin.clear();
-            cin.ignore(10000, '\n');
+        switch (userInput) {
+            case 1:
+                playerStats->showTeams();
+                break;
+            case 2:
+                menuPlayersOnTeam(playerStats);
+                break;
+            case 3:
+                menuIndividualPlayer(playerStats);
+                break;
+            case 4:
+                menuComparePlayers(playerStats);
+                break;
+            case 5:
+                delete playerStats;
+                continueRunning = false;
+                break;
+            default:
+                cout << "Invalid Input" << endl;
+                cin.clear();
+                cin.ignore(10000, '\n');
+                break;
         }
     }
     return 0;
@@ -97,35 +104,42 @@ void menuComparePlayers(PlayerStats *playerStats) {
         cin >> userInput;
 
         //Checks the user input
-        if (userInput == 1) {
-            //Only allows the user to select up to 5 players at once
-            if (playerStats->numberOfPlayersSelected() < 5) {
-                menuSelectPlayer(playerStats);
-            } else {
-                cout << "Only up to 5 players may be selected" << endl;
-            }
-        } else if (userInput == 2) {
-            //Only allows the user to deselect players if there are players currently selected
-            if (playerStats->numberOfPlayersSelected() != 0) {
-                menuDeselectPlayer(playerStats);
-            } else {
-                cout << "No players to deselect" << endl;
-            }
-        } else if (userInput == 3) {
-            playerStats->showSelectedPlayers();
-        }else if (userInput == 4) {
-            //Only compares players if there is at least one player selected
-            if (playerStats->numberOfPlayersSelected() != 0) {
-                menuCompareStats(playerStats);
-            } else {
-                cout << "No players to compare" << endl;
-            }
-        } else if (userInput == 5) {
-            continueComparing = false;
-        } else {
-            cout << "Invalid Input" << endl;
-            cin.clear();
-            cin.ignore(10000, '\n');
+        switch (userInput) {
+            case 1:
+                //Only allows the user to select up to 5 players at once
+                if (playerStats->numberOfPlayersSelected() < 5) {
+                    menuSelectPlayer(playerStats);
+                } else {
+                    cout << "Only up to 5 players may be selected" << endl;
+                }
+                break;
+            case 2:
+                //Only allows the user to deselect players if there are players currently selected
+                if (playerStats->numberOfPlayersSelected() != 0) {
+                    menuDeselectPlayer(playerStats);
+                } else {
+                    cout << "No players to deselect" << endl;
+                }
+                break;
+            case 3:
+                playerStats->showSelectedPlayers();
+                break;
+            case 4:
+                //Only compares players if there is at least one player selected
+                if (playerStats->numberOfPlayersSelected() != 0) {
+                    menuCompareStats(playerStats);
+                } else {
+                    cout << "No players to compare" << endl;
+                }
+                break;
+            case 5:
+                continueComparing = false;
+                break;
+            default:
+                cout << "Invalid Input" << endl;
+                cin.clear();
+                cin.ignore(10000, '\n');
+                break;
         }
     }
 }
